@@ -4,10 +4,26 @@ class Birth(val year: Int, val Month: Int, val Day: Int){
     }
 }
 
-class Contact(val Name: String, val Phone: String, val BirthDate: Birth){
+class Contact(val Name: String, var Phone: String, val BirthDate: Birth){
     fun Print() {
         println("Name: $Name, Mobile: $Phone, Date: $BirthDate")
     }
+    fun CautareNumar(number : String)
+    {
+        if(Phone == number)
+            println("Name: $Name, Mobile: $Phone, Date: $BirthDate")
+    }
+    fun CautareNume(name : String)
+    {
+        if(Name == name)
+            println("Name: $Name, Mobile: $Phone, Date: $BirthDate")
+    }
+    fun ActualizareNumar(name : String, number : String)
+    {
+        if(this.Name == name)
+            this.Phone = number
+    }
+
 }
 
 fun main(args : Array<String>){
@@ -20,14 +36,21 @@ fun main(args : Array<String>){
     for (persoana in agenda){
         persoana.Print()
     }
-    println("Agenda dupa eliminare contact [George]:")
+    /*println("Agenda dupa eliminare contact [George]:")
     agenda.removeAt(1)
     for (persoana in agenda){
         persoana.Print()
     }
     agenda.remove(Contact("Liviu" , "0231450211", Birth(1999, 7, 30)))
     println("Agenda dupa eliminare contact [Liviu]:")
-    agenda.removeAt(1)
+    agenda.removeAt(1)*/
+    println()
+    for (persoana in agenda){
+        persoana.CautareNume("Mihai")
+        persoana.CautareNumar("0761332100")
+        persoana.ActualizareNumar("Mihai","0756277066")
+    }
+    println()
     for (persoana in agenda){
         persoana.Print()
     }
