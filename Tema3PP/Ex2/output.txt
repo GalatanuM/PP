@@ -1,0 +1,8 @@
+The Mercator       projection         portrays Greenland as larger than Australia
+1
+in actuality, Australia       is more than three and a half times larger than Greenland.
+2
+As on all map projections, shapes or sizes are distortions of the true layout of the Earth's surface.
+3
+The Mercator projection exaggerates areas far from the equator.
+4
