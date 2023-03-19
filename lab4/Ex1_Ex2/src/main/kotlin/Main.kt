@@ -3,9 +3,9 @@ fun main() {
     val content2 = Content("Author 2", "Text 2", "Book 2", "Publisher 1")
     val content3 = Content("Author 1", "Text 3", "Book 3", "Publisher 2")
 
-    val book1 = Book(content1,"Author 1", "Text 1", "Book 1", "Publisher 1", 10.99)
-    val book2 = Book(content2,"Author 2", "Text 2", "Book 2", "Publisher 1", 12.99)
-    val book3 = Book(content3,"Author 1", "Text 3", "Book 3", "Publisher 2", 6.99)
+    val book1 = Book(content1, 10.99)
+    val book2 = Book(content2, 12.99)
+    val book3 = Book(content3, 6.99)
 
     val library = Library(mutableSetOf(book1,book2,book3))
     library.addBook(book1)

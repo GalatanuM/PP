@@ -1,19 +1,20 @@
 
 
-open class Book(private var data: Content, private var author: String, private var text: String, private var name: String, private var publisher: String, private var price: Double): Content(author, text, name, publisher)
+open class Book(private var data: Content, private var price: Double): Content(data.getAuthor(), data.getText(), data.getName(), data.getPublisher())
 {
     fun laString():String
     {
         return data.toString()
     }
 
-    override fun getAuthor(): String {
+    override fun getAuthor(): String
+    {
         return super.getAuthor()
     }
 
-    override fun setAuthor(author: String)
+    override fun setAuthor(autor: String)
     {
-        super.setAuthor(author)
+        super.setAuthor(autor)
     }
 
     override fun getName(): String
@@ -21,9 +22,9 @@ open class Book(private var data: Content, private var author: String, private v
         return super.getName()
     }
 
-    override fun setName(name: String)
+    override fun setName(nume: String)
     {
-        super.setName(name)
+        super.setName(nume)
     }
 
     override fun getText(): String
@@ -31,9 +32,9 @@ open class Book(private var data: Content, private var author: String, private v
         return super.getText()
     }
 
-    override fun setText(text: String)
+    override fun setText(scris: String)
     {
-        super.setText(text)
+        super.setText(scris)
     }
 
     override fun getPublisher(): String
@@ -41,9 +42,9 @@ open class Book(private var data: Content, private var author: String, private v
         return super.getPublisher()
     }
 
-    override fun setPublisher(publisher: String)
+    override fun setPublisher(publicatie: String)
     {
-        super.setPublisher(publisher)
+        super.setPublisher(publicatie)
     }
 
     fun setPrice(pret: Double)
