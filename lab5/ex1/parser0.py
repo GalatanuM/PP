@@ -27,13 +27,14 @@ class Parser:
         self.parser = builder.get_object('Parser', master)
 
         self.add_list_btn = self.builder.get_object('add_list_btn')
+        self.filter_odd_btn = self.builder.get_object('filter_odd_btn')
 
         self.integer_list_text = self.builder.get_object('integer_list_text')
 
         self.result_text = self.builder.get_object('result_text')
 
         self.add_list_btn['command'] = self.add_list
-
+        self.filter_odd_btn['command'] = self.filter_odd
 
         builder.connect_callbacks(self)
         self.integer_list = None
@@ -42,6 +43,12 @@ class Parser:
         result = self.integer_list_text.get("1.0", tk.END)
         result = result.strip().replace(' ', '')
         result = [int(item) for item in result.split(',')]
+        self.integer_list = result
+        self.result_text.delete("1.0", tk.END)
+        self.result_text.insert(tk.END, result)
+
+    def filter_odd(self):
+        result = [int(i) for i in self.integer_list if i % 2 == 0]
         self.integer_list = result
         self.result_text.delete("1.0", tk.END)
         self.result_text.insert(tk.END, result)
