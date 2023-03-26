@@ -29,6 +29,7 @@ class Parser:
         self.add_list_btn = self.builder.get_object('add_list_btn')
         self.filter_odd_btn = self.builder.get_object('filter_odd_btn')
         self.filter_primes_btn = self.builder.get_object('filter_primes_btn')
+        self.sum_btn = self.builder.get_object('sum_btn')
 
         self.integer_list_text = self.builder.get_object('integer_list_text')
 
@@ -37,6 +38,7 @@ class Parser:
         self.add_list_btn['command'] = self.add_list
         self.filter_odd_btn['command'] = self.filter_odd
         self.filter_primes_btn['command'] = self.filter_primes
+        self.sum_btn['command'] = self.sum_numbers
 
         builder.connect_callbacks(self)
         self.integer_list = None
@@ -60,6 +62,13 @@ class Parser:
         self.integer_list = result
         self.result_text.delete("1.0", tk.END)
         self.result_text.insert(tk.END, result)
+
+    def sum_numbers(self):
+        suma = 0
+        for i in self.integer_list:
+            suma = suma + i
+        self.result_text.delete("1.0", tk.END)
+        self.result_text.insert(tk.END, suma)
 
 if __name__ == '__main__':
     root = tk.Tk()
