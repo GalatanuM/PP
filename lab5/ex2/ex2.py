@@ -66,7 +66,6 @@ class AplicatieJurnal(QWidget):
         if ok:
             open('citate.txt', 'a').write(citat_nou + '\n')
 
-
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     jurnal = AplicatieJurnal()
