@@ -1,81 +1,140 @@
+from abc import ABC, abstractmethod
 import copy
-import json
-class HTMLFile:
-    def __init__(self, title, author, paragraphs):
-        self.title = title
-        self.author = author
-        self.paragraphs = paragraphs
 
-    def generate_html(self):
-        html = f"<h1>{self.title}</h1>\n"
+
+class File(ABC):
+    def __init__(self):
+        self.title = ""
+        self.author = ""
+        self.paragraphs = []
+
+    @abstractmethod
+    def read_file_from_stdin(self):
+        pass
+
+
+class HTMLFile(File):
+    def __init__(self):
+        super().__init__()
+
+    def read_file_from_stdin(self):
+        self.title = input("Enter title: ")
+        self.author = input("Enter author: ")
+        num_paragraphs = int(input("Enter the number of paragraphs: "))
+        for _ in range(num_paragraphs):
+            paragraph = input("Enter paragraph: ")
+            self.paragraphs.append(paragraph)
+
+    def print_html(self):
+        # Generare și afișare cod HTML
+        html = f"<html>\n<head>\n<title>{self.title}</title>\n</head>\n<body>\n"
+        html += f"<h1>{self.title}</h1>\n"
         html += f"<p>Author: {self.author}</p>\n"
+        html += "<div>\n"
         for paragraph in self.paragraphs:
             html += f"<p>{paragraph}</p>\n"
-        return html
+        html += "</div>\n</body>\n</html>"
+        print(html)
 
-class JSONFile:
-    def __init__(self, title, author, paragraphs):
-        self.title = title
-        self.author = author
-        self.paragraphs = paragraphs
 
-    def generate_json(self):
-        data = {
+class JSONFile(File):
+    def __init__(self):
+        super().__init__()
+
+    def read_file_from_stdin(self):
+        self.title = input("Enter title: ")
+        self.author = input("Enter author: ")
+        num_paragraphs = int(input("Enter the number of paragraphs: "))
+        for _ in range(num_paragraphs):
+            paragraph = input("Enter paragraph: ")
+            self.paragraphs.append(paragraph)
+
+    def print_json(self):
+        # Generare și afișare obiect JSON
+        json_obj = {
             "title": self.title,
             "author": self.author,
             "paragraphs": self.paragraphs
         }
-        return json.dumps(data)
+        print(json_obj)
 
-class TextFile:
-    def __init__(self, title, author, paragraphs):
-        self.title = title
-        self.author = author
-        self.paragraphs = paragraphs
 
-    def generate_text(self):
-        text = f"Title: {self.title}\n"
-        text += f"Author: {self.author}\n\n"
-        for paragraph in self.paragraphs:
-            text += f"{paragraph}\n"
-        return text
+class TextFile(File, ABC):
+    def __init__(self):
+        super().__init__()
+        self.template = ""
+
+    def print_text(self):
+        # Afișare text formatat
+        formatted_text = self.template.replace("<Template>", self.template)
+        formatted_text = formatted_text.replace("<Titlu>", self.title)
+        formatted_text = formatted_text.replace("<Autor>", self.author)
+        content = "\n".join(self.paragraphs)
+        formatted_text = formatted_text.replace("<paragraf1>", content)
+        print(formatted_text)
 
     def clone(self):
+        # Clonare obiect folosind modulul copy
         return copy.copy(self)
 
-class Article:
-    def __init__(self, title, author, paragraphs):
-        self.title = title
-        self.author = author
-        self.paragraphs = paragraphs
 
-class Blog:
-    def __init__(self, title, author, paragraphs):
-        self.title = title
-        self.author = author
-        self.paragraphs = paragraphs
+class ArticleTextFile(TextFile):
+    def __init__(self):
+        super().__init__()
 
-# Citirea datelor de la tastatură
-title = input("Introduceți titlul lucrării: ")
-author = input("Introduceți autorul lucrării: ")
-num_paragraphs = int(input("Introduceți numărul de paragrafe: "))
+    def print_text(self):
+        # Afișare text formatat pentru articole
+        formatted_text = f"    {self.title}\n" \
+                         f"                    by {self.author}\n"
+        content = "\n".join(self.paragraphs)
+        formatted_text += content
+        print(formatted_text)
 
-paragraphs = []
-for i in range(num_paragraphs):
-    paragraph = input(f"Introduceți paragraful {i+1}: ")
-    paragraphs.append(paragraph)
 
-# Crearea obiectului specificat
-file_type = input("Introduceți tipul de fișier (HTML, JSON, Text): ")
+class BlogTextFile(TextFile):
+    def __init__(self):
+        super().__init__()
 
-if file_type == "HTML":
-    file = HTMLFile(title, author, paragraphs)
-    generated_file = file.generate_html()
-elif file_type == "JSON":
-    file = JSONFile(title, author, paragraphs)
-    generated_file = file.generate_json()
-elif file_type == "Text":
-    file = TextFile(title, author, paragraphs)
-    generated_file = file.generate_text()
+    def print_text(self):
+        # Afișare text formatat pentru blog-uri
+        formatted_text = f"{self.title}\n"
+        content = "\n".join(self.paragraphs)
+        formatted_text += content + "\n\n"
+        formatted_text += f"Written by {self.author}\n"
+        print(formatted_text)
 
-print(generated_file)
+
+class FileFactory:
+    @staticmethod
+    def factory(file_type):
+        if file_type == "HTML":
+            return HTMLFile()
+        elif file_type == "JSON":
+            return JSONFile()
+        elif file_type == "ArticleText":
+            return ArticleTextFile()
+        elif file_type == "BlogText":
+            return BlogTextFile()
+        else:
+            raise ValueError("Invalid file type.")
+
+
+def main():
+    file_type = input("Enter file type (HTML, JSON, ArticleText, BlogText): ")
+    file_factory = FileFactory()
+    file = file_factory.factory(file_type)
+
+    file.read_file_from_stdin()
+
+    if isinstance(file, HTMLFile):
+        file.print_html()
+    elif isinstance(file, JSONFile):
+        file.print_json()
+    elif isinstance(file, TextFile):
+        file.print_text()
+    else:
+        print("Invalid file type.")
+
+
+if __name__ == '__main__':
+    main()
