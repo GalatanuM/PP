@@ -18,7 +18,7 @@ def countdown():
     print("Numere:", numbers)
     primes = filter(is_prime, numbers)
     prime_list = list(primes)
-    #convertim obiectul filtrat într-o listă
+    #convertim obiectul filtrat într-o lista
     print("Numere prime:", prime_list)
 
 def ver_1():
