@@ -33,7 +33,7 @@ fun main() = runBlocking<Unit> {
     }
     println("Numărator = $counter")
 
-    val values = generateValues() // Obțineți lista de obiecte ADT
+    val values = generateValues()
     writeValuesToFileConcurrently(values, "output.txt")
 }
 
